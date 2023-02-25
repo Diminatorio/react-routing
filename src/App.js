@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {NotFound} from "./modules/about/pages/NotFound";
+import {GreetPage} from "./modules/about/pages/GreetPage";
+import Navigation from "./modules/common/components/Navigation";
+import UserModule from "./modules/users/UserModule";
+import AlbumModule from "./modules/albums/AlbumModule";
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {setUsers} from "./store/actions/userActions";
 
 function App() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(setUsers())
+    }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+          <Router>
+              <Navigation/>
+              <Switch>
+                  <Route path='/users'><UserModule/></Route>
+                  <Route path='/albums/'><AlbumModule/></Route>
+                  <Route path='/notfound'><NotFound/></Route>
+                  <Route exact path='/'><GreetPage/></Route>
+                  <Route path="*"><Redirect to='/notfound'/></Route>
+
+              </Switch>
+          </Router>
+      </div>
   );
 }
 
