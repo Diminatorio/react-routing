@@ -1,15 +1,15 @@
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {Route, Navigate, Routes} from "react-router-dom";
 import AlbumsListPage from "./pages/AlbumsListPage";
 import PhotosPage from "./pages/PhotosPage";
+import UserAlbumsListPage from "./pages/UserAlbumsListPage";
 
 export default function AlbumModule () {
     return (
-        <Router>
-            <Switch>
-                <Route path='/albums/photos/:id'><PhotosPage/></Route>
-                <Route path='/albums/'><AlbumsListPage/></Route>
-                {/*<Route exact path='/users/*'><Redirect to='/notfound' replace/></Route>*/}
-            </Switch>
-        </Router>
+        <Routes>
+            <Route path='/photos/:id' element={<PhotosPage/>}/>
+            <Route path='/' element={<AlbumsListPage/>}/>
+            <Route path='/:id' element={<UserAlbumsListPage/>}/>
+            <Route path='*' element={<Navigate to='/notfound' replace />} />
+        </Routes>
     )
 }

@@ -1,9 +1,9 @@
 import useCustomNavigate from "../../common/hooks/useCustomNavigate";
-import {useHistory, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useEditUser from "../hooks/useEditUser";
 
 export default function UserEditPage() {
-    const history = useHistory();
+    const history = useNavigate();
 
     const {id} = useParams();
 
@@ -16,12 +16,12 @@ export default function UserEditPage() {
 
     const buttonEditFunction = () => {
         handleSubmit();
-        history.push('/users/')
+        history('/users/')
     }
 
     const buttonDeleteFunction = () => {
         onDeleteUser();
-        history.push('/users/')
+        history('/users/')
     }
 
     return (

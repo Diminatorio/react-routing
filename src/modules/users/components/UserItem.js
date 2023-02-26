@@ -6,6 +6,7 @@ export default function UserItem({id, name}) {
     return (
         <div className="user-item">
             <Link to={`${pathname}user/${id}`}>{name}</Link>
+            <Link to={`/albums/${id}`}> To albums</Link>
         </div>
     )
 }

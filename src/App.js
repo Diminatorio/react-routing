@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import {NotFound} from "./modules/about/pages/NotFound";
 import {GreetPage} from "./modules/about/pages/GreetPage";
 import Navigation from "./modules/common/components/Navigation";
@@ -18,14 +18,13 @@ function App() {
       <div className="App">
           <Router>
               <Navigation/>
-              <Switch>
-                  <Route path='/users'><UserModule/></Route>
-                  <Route path='/albums/'><AlbumModule/></Route>
-                  <Route path='/notfound'><NotFound/></Route>
-                  <Route exact path='/'><GreetPage/></Route>
-                  <Route path="*"><Redirect to='/notfound'/></Route>
-
-              </Switch>
+              <Routes>
+                  <Route path='/users/*' element={<UserModule/>}/>
+                  <Route path='/albums/*' element={<AlbumModule/>}/>
+                  <Route path='/notfound' element={<NotFound/>}/>
+                  <Route path='/' element={<GreetPage/>}/>
+                  <Route path='*' element={<Navigate to='/notfound' replace />} />
+              </Routes>
           </Router>
       </div>
   );
