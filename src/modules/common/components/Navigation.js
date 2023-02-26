@@ -1,7 +1,7 @@
 import {useHistory} from "react-router-dom";
 
 export default function Navigation() {
-    const history = useHistory()
+    const history =  useHistory()
 
     const onHome = () => {history.push('/')}
     const onUsers = () => {history.push('/users/')}

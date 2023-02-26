@@ -9,3 +9,5 @@ export const putUser = (data) => api.put(`users/${data.id}`,
     .then(resp => resp.data)
 
 export const deleteUserById = id => api.delete(`users/${id}`)
+
+export const postUser = data => api.post('users', data).then(resp => resp.data)
