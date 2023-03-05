@@ -1,21 +1,23 @@
 import useCustomNavigate from "../../common/hooks/useCustomNavigate";
 import {useNavigate, useParams} from "react-router-dom";
 import useEditUser from "../hooks/useEditUser";
+import {Field, Form, Formik} from "formik";
+import userCreationSchema from "../validation/userCreationSchema";
 
 export default function UserEditPage() {
     const history = useNavigate();
 
     const {id} = useParams();
 
-    const {data, handleInputChange, handleSubmit, onDeleteUser} = useEditUser(id);
+    const {user, handleSubmit, onDeleteUser} = useEditUser(id);
 
     const navigate = useCustomNavigate()
     const onBackButtonClick = () => {
         navigate.back();
     }
 
-    const buttonEditFunction = () => {
-        handleSubmit();
+    const buttonEditFunction = (values) => {
+        handleSubmit(values);
         history('/users/')
     }
 
@@ -27,28 +29,19 @@ export default function UserEditPage() {
     return (
         <>
             <h2>User Edit Page</h2>
-            <input type="text"
-                   name='name'
-                   value={data.name || "" }
-                   className='place-input'
-                   placeholder="Type here your name..."
-                   onChange={handleInputChange}
-            />
-            <input type="text"
-                   name='username'
-                   value={data.username || "" }
-                   className='place-input'
-                   placeholder="Type here your username..."
-                   onChange={handleInputChange}
-            />
-            <input type="text"
-                   name="email"
-                   value={data.email || "" }
-                   className='place-input'
-                   placeholder="Type here your email..."
-                   onChange={handleInputChange}
-            />
-            <button onClick={buttonEditFunction}>Edit</button>
+            <Formik initialValues={user} onSubmit={buttonEditFunction} validationSchema={userCreationSchema}>
+                {() => {
+                    return (
+                        <Form>
+                            <Field name='name' placeholder='Type name'/>
+                            <Field name='username' placeholder='Type username'/>
+                            <Field name='email' placeholder='Type email'/>
+                            <button>Edit</button>
+                        </Form>
+                    )
+                }}
+            </Formik>
+
             <button onClick={onBackButtonClick}>Go Back</button>
             <button onClick={buttonDeleteFunction}>DELETE USER</button>
         </>
